@@ -11,6 +11,8 @@ services:
       - redis
     ports:
       - "3000"
+    restart: unless-stopped
+    
   apiLB:
     image: nginx:latest
     volumes:
@@ -19,6 +21,8 @@ services:
       - api
     ports:
       - "4000:4000"
+    restart: unless-stopped
+    
   mariadb:
     image: mariadb:latest
     environment:
@@ -30,6 +34,7 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+    restart: unless-stopped
 
   frontend:
     build: ./frontend
@@ -39,6 +44,7 @@ services:
       - apiLB
     ports:
       - "2000"
+    restart: unless-stopped
 
   frontendLB:
     image: nginx:latest
@@ -48,6 +54,7 @@ services:
       - frontend
     ports:
       - "80:80"
+    restart: unless-stopped
 
 
 networks:
